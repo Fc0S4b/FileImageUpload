@@ -1,10 +1,27 @@
 const { StatusCodes } = require('http-status-codes');
 const path = require('path');
+const CustomError = require('../errors');
 
 const uploadProductImage = async (req, res) => {
-  // console.log(req); //necesitamos convertir la info de la imagen a un formato que se pueda leer, esto es con el paquete express-fileupload (en postman se usa form-data para asociar una imagen a la req)
-  // console.log(req.files); //verás los datos de la imagen como objeto (no olvides permitirle a postman el acceso a la carpeta para subir la imagen en los settings)
-  let productImage = req.files.image;
+  // check if file exists
+  // check format
+  // check size
+  if (!req.files) {
+    throw new CustomError.BadRequestError('No File Uploaded');
+  }
+  const productImage = req.files.image;
+
+  if (!productImage.mimetype.startsWith('image')) {
+    throw new CustomError.BadRequestError('Please Upload Image');
+  }
+  const maxSize = 1000;
+
+  if (productImage.size > maxSize) {
+    throw new CustomError.BadRequestError(
+      'Please Upload Image Smaller Then 1kb'
+    );
+  }
+
   const imagePath = path.join(
     __dirname,
     '../public/uploads/' + `${productImage.name}`
