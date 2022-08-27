@@ -1,6 +1,7 @@
 const { StatusCodes } = require('http-status-codes');
 const path = require('path');
 const CustomError = require('../errors');
+// const fs = require('fs') para remover temp files
 
 // si usas cloudinary
 // const cloudinary = require('cloudinary').v2
@@ -48,6 +49,7 @@ const uploadProductImage = async (req, res) => {
 // );
 // si envias la req por postman verás que se sube la imagen a cloudinary, en la consola verás un objeto con toda la data que envía cloudinary, interesa ver secure_url donde la imagen está alojada en cloudinary
 // console.log(result);
+// fs.unlinkSync(req.files.image.tempFilePath); para remover archivos de temp ya que cada vez que se sube a la nube, se guarda también la imagen en un temp folder
 //   return res.status(StatusCodes.OK).json({ image: { src: result.secure_url } });
 // };
 
