@@ -14,7 +14,7 @@ const productRouter = require('./routes/productRoutes');
 const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
 
-app.get(express.json());
+app.use(express.json());
 
 app.get('/', (req, res) => {
   res.send('<h1>File Upload Starter</h1>');
